@@ -52,6 +52,13 @@ impl Grid<'_> {
         }
     }
 
+	pub fn in_grid(self: &Self, point: maths::Size) -> bool {
+		point.x >= 0 
+		&& point.x < self.size.x
+		&& point.y >= 0
+		&& point.y < self.size.y 
+	}
+
     /// Read in all spots, and in all the given directions the grid.
     pub fn read(self: &Self) -> Vec<String> {
         let mut lines: Vec<String> = Vec::new();
@@ -59,32 +66,40 @@ impl Grid<'_> {
 		// Loop for all positions.
         for (start_y, line) in self.grid.iter().enumerate() {
             for (start_x, _) in line.iter().enumerate() {
-                // Loop for all directions.
+				// Loop for all directions.
 				for direction in &self.directions {
-					
-					print!("### Direction: ({}, {}), Start: ({}, {}). Reading: ", direction.x, direction.y, start_x, start_y);
+                    // Extend the reach slowly.
+					let mut reach: usize = 2;
+					let mut reach_in_grid: bool = true;
 
-                    let mut cursor:maths::Size =maths::Size { 
-                        x: start_x as i32, 
-                        y: start_y as i32, 
-                    };
-                    let mut reading: String = String::new();
+					while reach_in_grid {
+						// Read to the end of grid.
+						let mut cursor:maths::Size =maths::Size { 
+							x: start_x as i32, 
+							y: start_y as i32, 
+						};
+						let mut reading: String = String::new();
+						let mut steps: usize = 0;
 
-					// Read to the end of grid.
-                    while cursor.x >= 0 
-                        && cursor.x < self.size.x
-                        && cursor.y >= 0
-                        && cursor.y < self.size.y 
-                    {   
-                        let character: &char = &self.grid[cursor.y as usize][cursor.x as usize];
-                        reading += &character.to_string();
+						while 
+							self.in_grid(cursor) 
+							&& steps < reach
+						{   
+							let character: &char = &self.grid[cursor.y as usize][cursor.x as usize];
+							reading += &character.to_string();
+							
+							cursor.x += direction.x;
+							cursor.y += direction.y;
+
+							steps += 1;
+						}
+
+						if reading.len() > 1 {
+							lines.push(reading);
+						}
 						
-                        cursor.x += direction.x;
-                        cursor.y += direction.y;
-                    }
-
-					if reading.len() > 1 {
-						lines.push(reading);
+						reach_in_grid = self.in_grid(cursor);
+						reach += 1;					
 					}
 				}
             }
