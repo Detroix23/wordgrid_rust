@@ -45,33 +45,6 @@ pub fn char_at(word: &str, at: usize) -> Result<char, String> {
 	Result::Ok(bytes[at] as char)
 }
 
-/// Convert a word to lowecase, and then ins a base-27 number.
-/// 'a' is 1, 'z' is 26, the rest is 0.
-/// Returns a base-10 `i32`.
-pub fn to_int(word: String, length: usize) -> u32 {
-	let word: String = word.to_ascii_lowercase();
-	let mut number: u32 = 0;
-	let mut exponent: u32 = length as u32;
-	let base: u32 = 27;
-
-	for character in word.chars() {
-		// Get and check ASCII index of the char.
-		let index: u32 =  if let INDEX_A..=INDEX_Z = character as u8 {
-			(character as u8 - INDEX_A - 1).into()
-		} else {
-			0u32
-		};
-
-		print!("{} * {}^{} ", index, base, exponent);
-		number += index * base.pow(exponent as u32);
-		exponent -= 1;
-	}
-
-	println!();
-
-	number
-}
-
 /// Compare 2 `&'static str`.
 /// **You must ensure that the strings are ASCII only.**
 pub fn compare(a: &str, b: &str) -> Comparison {
