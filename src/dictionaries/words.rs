@@ -35,7 +35,7 @@ pub fn index(character: char) -> u8 {
 /// **You must ensure that the string is ASCII only.**
 pub fn char_at(word: &str, at: usize) -> Result<char, String> {
 	let bytes: &[u8] = word.as_bytes();
-	if at >= bytes.len() || at < 0 {
+	if at >= bytes.len() {
 		return Result::Err(format!(
 			"(X) - dictionaries.words.char_at(word: {}, at: {}) - Index ({}) out of range ({})",
 			word, at, at, word.len())

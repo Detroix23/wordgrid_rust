@@ -7,6 +7,7 @@ use glob;
 
 use crate::modules::maths;
 
+#[allow(dead_code)]
 pub const DIRECTION_ALL: [maths::Size; 8] = [
    maths::Size { x: 1, y: 0 },
    maths::Size { x: 1, y: 1 },
@@ -19,6 +20,7 @@ pub const DIRECTION_ALL: [maths::Size; 8] = [
 
 ];
 
+#[allow(dead_code)]
 pub const DIRECTION_RIGHT_TO_LEFT: [maths::Size; 4] = [
    maths::Size { x: 1, y: 0 },
    maths::Size { x: 1, y: 1 },

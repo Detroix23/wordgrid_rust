@@ -2,12 +2,14 @@
 
 use std::cmp;
 use std::{path};
-use rand::{self, Rng};
+use rand::{Rng};
 
-use crate::modules::{self, maths, defaults};
+use crate::modules::{maths, defaults};
 use crate::grid;
 use crate::dictionaries;
 
+/// Generate a random character square grid.
+#[allow(dead_code)]
 pub fn random_grid(size: maths::Size) -> maths::CharGrid {
 	let mut grid: maths::CharGrid = Vec::new();
 	let mut rng: rand::prelude::ThreadRng = rand::rng();
@@ -24,6 +26,7 @@ pub fn random_grid(size: maths::Size) -> maths::CharGrid {
 }
 
 /// General test.
+#[allow(dead_code)]
 pub fn general1() -> () {
 
 	println!("Dict folder: {}", defaults::paths().get_dictionaries().display());
@@ -62,6 +65,7 @@ pub fn general1() -> () {
 }
 
 /// Test files 1.
+#[allow(dead_code)]
 pub fn files1() -> () {
 	let lines = dictionaries::files::read(path::Path::new("./data/file1.txt"));
 
@@ -69,6 +73,7 @@ pub fn files1() -> () {
 }
 
 /// Test word 1.
+#[allow(dead_code)]
 pub fn words1() -> () {
 	let words_a: Vec<&str> = vec!["-", "a", "b", "c", "A", "av", "ab", "aaac", "asdasdasdasd", "z"];
 	let words_b: Vec<&str> = vec!["-", "a", "c", "a", "z", "ab", "aasd", "aaacd", "asdasdasdasdy", "aaaaaaa"];
@@ -87,10 +92,12 @@ pub fn words1() -> () {
 	}
 }
 
+/// Test dichotomy 1.
+#[allow(dead_code)]
 pub fn dicho1() -> () {
 	let words: Vec<&str> = vec!["my", "abc", "zxcb", "sfsfdasjfjdask", "gastroenterological", "repanel"];
-	let dictionary = dictionaries::files::read_from_data("english_alpha1.txt");
-
+	let dictionary = dictionaries::prepare_dictionary("english_alpha1.txt.sorted".to_string());
+	println!("Dict: len={} sorted={}", dictionary.len(), dictionaries::sort::is_sorted(&dictionary));
 
 	for word in words {
 		println!("{}: {:#?}", word, dictionaries::search::dichotomy(word.to_string(), &dictionary))

@@ -1,10 +1,10 @@
 // src/dictionaries/files.rs
 
 use std::{
-	fs, 
+	fs::{self, File}, 
 	io::{
 		self,
-		Read,
+		Read, Write,
 	},
 	path
 };
@@ -55,6 +55,23 @@ pub fn read(file_path: &path::Path) -> base::WordList {
 /// Shorthand to get dictionaries path, join the `name` to it, and read it.
 pub fn read_from_data(name: &str) -> base::WordList {
 	read(&modules::defaults::paths().get_dictionaries().join(name))
+}
+
+/// Write a list of word. Each word is separated by `separator`.
+pub fn write(file_path: &path::Path, words: &base::WordList, separator: &str) {
+	let file = File::create(file_path);
+	match file {
+		Ok(mut body) => {
+			match body.write_all(words.join(separator).as_bytes()) {
+				Err(error) => {eprintln!(
+					"(!) - dictionaries.files.write - Problem writting `words` (len: {}) into {}. Error: {}",
+					words.len(), file_path.display(), error
+				)},
+				_ => ()
+			}
+		},
+		Err(error) => {eprintln!("(!) - dictionaries.files.write - Can not write `file_path`:{} ({}).", file_path.display(), error);},
+	};
 }
 
 
