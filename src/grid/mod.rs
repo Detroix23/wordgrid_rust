@@ -70,22 +70,23 @@ impl Grid<'_> {
 		start: maths::Size, 
 		direction: maths::Size
 	) {
-		// Extend the reach slowly.
 		let mut reach: usize = 2;
 		let mut reach_in_grid: bool = true;
 
 		while reach_in_grid {
 			// Read to the end of grid.
-			let mut cursor:maths::Size =maths::Size { 
+			let mut cursor:maths::Size = maths::Size { 
 				x: start.x, 
 				y: start.y, 
 			};
 			let mut reading: String = String::new();
+			let mut valid_word_start: bool = true;
 			let mut steps: usize = 0;
 
 			while 
 				self.in_grid(cursor) 
 				&& steps < reach
+				&& valid_word_start
 			{   
 				let character: &char = &self.grid[cursor.y as usize][cursor.x as usize];
 				reading += &character.to_string();
