@@ -1,6 +1,6 @@
 // src/grid/mod.rs
 
-use std::{char};
+use std::{char, fmt::format};
 
 pub mod solutions;
 pub mod files;
@@ -49,14 +49,62 @@ impl Grid {
         }
     }
 
-    /// Prints the grid to the console.
-    pub fn display(self: &Self, space: usize) -> () {
-        for lines in &self.grid {
-            for character in lines {
-                print!("{}{}", character, " ".repeat(space));
+    /// Return a nice String of the grid.
+    pub fn display(self: &Self, space: usize) -> String {
+		let mut string: String = String::from("* Displaying grid: \n");
+
+
+		let vertical: &str = "│";
+		let horizontal: &str = "─";
+		let corner: &str = "┼";
+		let spaces: String = " ".repeat(space);
+		let row_separator: String = format!("{}{}", horizontal.repeat(space * 2 + 1), corner);
+
+		let x_axis: Vec<String> = (0..self.size.x)
+			.map(|n| n.to_string())
+			.collect();
+		let longest_x: usize = x_axis
+			.iter()
+			.fold(0, |length, n| {
+				if n.len() > length { n.len() }
+				else { length }
+			});
+		let longest_y: usize = (1..self.size.y)
+			.fold(0, |length, n| {
+				if n.to_string().len() > length { n.to_string().len() }
+				else { length }
+			});
+
+		string += &format!("{}{}", " ".repeat(longest_y), vertical);
+		for x in x_axis {
+			string += &format!(
+				"{}{}{}{}", 
+				spaces, 
+				x, 
+				" ".repeat(if space > 0 && x.len() % 2 == 0 { 
+					space - 1
+				} else {
+					space
+				}), 
+				vertical
+			);
+		}
+
+		string += &format!("\n{}{}{}\n", horizontal.repeat(longest_y), corner, row_separator.repeat(self.size.x as usize));
+	
+        for (y, lines) in self.grid.iter().enumerate() {
+			let delta: usize = longest_y - (y + 1).to_string().len(); 
+            
+			for (x, character) in lines.iter().enumerate() {
+				if x == 0 {
+					string += &format!("{}{}{}", " ".repeat(delta), y + 1, vertical);
+				}
+                string += &format!("{}{}{}{}", spaces, character, spaces, vertical);
             }
-            println!();
+            string += &format!("\n{}{}{}\n", horizontal.repeat(longest_y), corner, row_separator.repeat(self.size.x as usize));
         }
+
+		string
     }
 
 	/// Check if given point is in grid.

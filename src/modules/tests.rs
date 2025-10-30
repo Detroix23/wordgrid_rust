@@ -45,7 +45,7 @@ pub fn general1() -> () {
 		dict.clone(),
     );
 
-    wg1.display(1usize);
+    println!("{}", wg1.display(1usize));
 	wg1.read(2);
 
     wg1.report_solutions(3);
