@@ -4,16 +4,20 @@ mod grid;
 mod dictionaries;
 mod modules;
 
-use crate::modules::tests;
-
 fn main() {
 	println!("# Word grid.");
 
-	tests::general1();
+	println!("## Environment variables.");
+	println!(
+		"Loaded: `{}`, `{}`", 
+		modules::defaults::paths().dictionaries.display(), modules::defaults::paths().grids.display()
+	);
 
-	// tests::files1();
+	modules::tests::general1();
 
-	// tests::words1();
+	// modules::tests::files1();
 
-	// tests::dicho1();
+	// modules::tests::words1();
+
+	// modules::tests::dicho1();
 }

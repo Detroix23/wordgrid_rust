@@ -32,6 +32,7 @@ pub const DIRECTION_RIGHT_TO_LEFT: [maths::Size; 4] = [
 
 pub struct PathsTuple {
 	pub dictionaries: path::PathBuf,
+	pub grids: path::PathBuf,
 }
 impl PathsTuple {
 	/// Return a `&Path` of the `dictionary`.
@@ -39,34 +40,39 @@ impl PathsTuple {
 		self.dictionaries.clone().leak()
 	}
 
-	pub fn list_dictionaries(self: &Self) -> Vec<path::PathBuf> {
-		let expression: &str = &(self.dictionaries
-			.to_str()
-			.expect("(X) - modules.default.PathsTuple - Error transforming `to_str`.")
-			.to_owned()
-			+ "/*"
-		);
-		println!("{}", expression);
-		match glob::glob(expression) {
-			Ok(files) => {
-				let mut list: Vec<path::PathBuf> = vec![];
-				for file in files {
-					match file {
-						Ok(path_) => list.push(path_),
-						Err(_) => (),
-					}
-				}
-
-				list
-			},
-			Err(error) => {
-				eprint!("(!) - modules.default.PathsTuple - Error globing `dictionaries`: {}.", error);
-				vec![]
-			}
-		}
+	/// Return a `&Path` of the `dictionary`.
+	pub fn get_grids(self: &Self) -> &path::Path {
+		self.grids.clone().leak()
 	}
 }
 
+/// List path.
+pub fn list_path(target: path::PathBuf) -> Vec<path::PathBuf> {
+	let expression: &str = &(target
+		.to_str()
+		.expect("(X) - modules.default.PathsTuple - Error transforming `to_str`.")
+		.to_owned()
+		+ "/*"
+	);
+	println!("{}", expression);
+	match glob::glob(expression) {
+		Ok(files) => {
+			let mut list: Vec<path::PathBuf> = vec![];
+			for file in files {
+				match file {
+					Ok(path_) => list.push(path_),
+					Err(_) => (),
+				}
+			}
+
+			list
+		},
+		Err(error) => {
+			eprint!("(!) - modules.default.PathsTuple - Error globing `dictionaries`: {}.", error);
+			vec![]
+		}
+	}
+}
 
 /// Extract the paths from the `.env` file.
 pub fn paths() -> PathsTuple {
@@ -80,8 +86,17 @@ pub fn paths() -> PathsTuple {
 		},
 	};
 
+	let grids_path: path::PathBuf = match env::var("GRIDS") {
+		Ok(value) => path::PathBuf::from(value),
+		Err(error) => {
+			eprintln!("(!) - Error reading env key `GRIDS`: {} \n -> Falling back to `./data/grids`", error);
+			path::PathBuf::from("./data/grids")
+		},
+	};
+
 	PathsTuple { 
 		dictionaries: dictionaries_path,
+		grids: grids_path,
 	}
 }
 

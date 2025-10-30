@@ -1,7 +1,10 @@
 // src/dictionaries/files.rs
 
 use std::{
-	fs::{self, File}, 
+	fs::{
+		self,
+		File
+	}, 
 	io::{
 		self,
 		Read, Write,

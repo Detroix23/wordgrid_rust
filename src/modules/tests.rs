@@ -30,16 +30,12 @@ pub fn random_grid(size: maths::Size) -> maths::CharGrid {
 pub fn general1() -> () {
 
 	println!("Dict folder: {}", defaults::paths().get_dictionaries().display());
-	println!("Contains: {:?}", defaults::paths().list_dictionaries());
+	println!("Contains: {:?}", defaults::list_path(defaults::paths().dictionaries));
 
 	let dict = dictionaries::prepare_dictionary("english_alpha1.txt.sorted".to_string());
 
-    let grid1: maths::CharGrid = vec![
-        vec!['a', 'b', 'c'],
-        vec!['d', 'e', 'f'],
-        vec!['g', 'h', 'i'],
-    ];
-
+    let grid1: maths::CharGrid = grid::files::read_from_data("grid1.txt");
+	
     let mut wg1: grid::Grid = grid::Grid::new(
         grid1,
         defaults::DIRECTION_ALL.to_vec(),
@@ -50,20 +46,6 @@ pub fn general1() -> () {
 	wg1.read(2);
 
     wg1.report_solutions(3);
-
-	let grid2: maths::CharGrid = random_grid(maths::Size { x: 10, y: 10 });
-
-	let mut wg2: grid::Grid = grid::Grid::new(
-        grid2,
-        defaults::DIRECTION_ALL.to_vec(),
-		dict.clone(),
-    );
-
-    wg2.display(1usize);
-	wg2.read(2);
-
-    wg2.report_solutions(3);
-
 }
 
 /// Test files 1.

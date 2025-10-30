@@ -2,7 +2,8 @@
 
 use std::{char};
 
-mod solutions;
+pub mod solutions;
+pub mod files;
 
 use crate::{ 
 	modules::maths,
