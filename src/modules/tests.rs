@@ -35,7 +35,7 @@ pub fn general1() -> () {
 	println!("Dict folder: {}", defaults::paths().get_dictionaries().display());
 	println!("Contains: {:?}", defaults::list_path(defaults::paths().dictionaries));
 
-	let dict = dictionaries::prepare_dictionary("hermitdave-FrequencyWords_en-50k.txt".to_string());
+	let dict = dictionaries::prepare_dictionary("hermitdave-FrequencyWords_en-50k.sorted".to_string());
 
     let grid1: maths::CharGrid = grid::files::read_from_data("grid1.txt");
 
