@@ -15,8 +15,8 @@ pub enum Result {
 /// Iterative binary search.
 /// Take a `word` (`String`) and a `dictionary` (List of word). 
 pub fn dichotomy(word: String, dictionary: &base::WordList) -> Result {
-	eprintln!("=====================================");
-	eprintln!("dictionaries.search.dichotomy - New word: {}, dict len: {}", word, dictionary.len());
+	// eprintln!("=====================================");
+	//eprintln!("dictionaries.search.dichotomy - New word: {}, dict len: {}", word, dictionary.len());
 
 	let mut start: usize = 0;
 	let mut end: usize = dictionary.len() - 1;
@@ -33,7 +33,7 @@ pub fn dichotomy(word: String, dictionary: &base::WordList) -> Result {
 			found = true;
 		}
 
-		eprintln!("	- ({}, {}; {}) value: {}, comparison: {:?}", start, end, cursor, value, comparison);
+		// eprintln!("	- ({}, {}; {}) value: {}, comparison: {:?}", start, end, cursor, value, comparison);
 		
 		if words::is_greater(&word, &value) {
 			start = cursor + 1;

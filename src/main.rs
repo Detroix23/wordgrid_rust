@@ -9,11 +9,11 @@ use crate::modules::tests;
 fn main() {
 	println!("# Word grid.");
 
-	// tests::general1();
+	tests::general1();
 
 	// tests::files1();
 
 	// tests::words1();
 
-	tests::dicho1();
+	// tests::dicho1();
 }
