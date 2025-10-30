@@ -15,7 +15,10 @@ use std::{
 use crate::dictionaries::base;
 use crate::modules;
 
+/// Define line breaks, new words.
 const LINE_SEPARATORS: [char; 2] = ['\n', '\r'];
+/// Define character that will prematurely end the reading of the current line. 
+const LINE_SHORT: [char; 1] = [' '];
 
 /// Read a file `name` and return a list of lines `String`.
 pub fn read(file_path: &path::Path) -> base::WordList {
@@ -23,6 +26,7 @@ pub fn read(file_path: &path::Path) -> base::WordList {
 		Ok(file) => {
 			let mut buffer_reader: io::BufReader<fs::File> = io::BufReader::new(file);
 			let mut content: String = String::new();
+			let mut line_shorted: bool = false;
 
 			buffer_reader.read_to_string(&mut content).expect("(X) - dictionaries.files.read - Reading to string error.");
 
@@ -33,8 +37,11 @@ pub fn read(file_path: &path::Path) -> base::WordList {
 					if !current.is_empty() {
 						lines.push(current);
 					}
+					line_shorted = false;
 					current = String::new();
-				} else {
+				} else if LINE_SHORT.contains(&character) {
+					line_shorted = true;
+				} else if !line_shorted {
 					current.push(character);
 				}
 			}

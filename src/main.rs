@@ -9,7 +9,7 @@ fn main() {
 
 	println!("## Environment variables.");
 	println!(
-		"Loaded: `{}`, `{}`", 
+		"* Loaded: `{}`, `{}`", 
 		modules::defaults::paths().dictionaries.display(), modules::defaults::paths().grids.display()
 	);
 

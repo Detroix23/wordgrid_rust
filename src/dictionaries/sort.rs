@@ -27,9 +27,9 @@ pub fn sort(words: &mut dictionaries::base::WordList) -> () {
 		let mut before: String = words[i - 1].clone();
 		let mut j: usize = 0;
 
-		eprint!("\r{}: {}, {}; \r", i, value, before);
+		eprint!("\x1b[J{}: {}, {}; \r", i, value, before);
 
-		while !dictionaries::words::is_greater(&value, &before) && i - j > 0 {
+		while !dictionaries::words::is_greater(&value, &before) && i - j > 1 {
 			words[i - j] = String::from(&before);
 			j += 1;
 			before = words[i - 1 - j].clone();
@@ -43,5 +43,5 @@ pub fn sort(words: &mut dictionaries::base::WordList) -> () {
 		i += 1;
 	}
 
-	eprintln!("Finished.")
+	eprintln!("Finished. {}", 0x07)
 }

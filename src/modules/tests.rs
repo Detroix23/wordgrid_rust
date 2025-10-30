@@ -8,9 +8,11 @@ use crate::modules::{maths, defaults};
 use crate::grid;
 use crate::dictionaries;
 
-/// Generate a random character square grid.
+/// Generate a random character grid.
 #[allow(dead_code)]
 pub fn random_grid(size: maths::Size) -> maths::CharGrid {
+	println!("* Generated random square grid of {}*{}.", size.x, size.y);
+
 	let mut grid: maths::CharGrid = Vec::new();
 	let mut rng: rand::prelude::ThreadRng = rand::rng();
 
@@ -28,14 +30,15 @@ pub fn random_grid(size: maths::Size) -> maths::CharGrid {
 /// General test.
 #[allow(dead_code)]
 pub fn general1() -> () {
+	println!("## TEST: General 1.");
 
 	println!("Dict folder: {}", defaults::paths().get_dictionaries().display());
 	println!("Contains: {:?}", defaults::list_path(defaults::paths().dictionaries));
 
-	let dict = dictionaries::prepare_dictionary("english_alpha1.txt.sorted".to_string());
+	let dict = dictionaries::prepare_dictionary("hermitdave-FrequencyWords_en-50k.txt".to_string());
 
     let grid1: maths::CharGrid = grid::files::read_from_data("grid1.txt");
-	
+
     let mut wg1: grid::Grid = grid::Grid::new(
         grid1,
         defaults::DIRECTION_ALL.to_vec(),
@@ -51,6 +54,8 @@ pub fn general1() -> () {
 /// Test files 1.
 #[allow(dead_code)]
 pub fn files1() -> () {
+	println!("## TEST: Files 1.");
+
 	let lines = dictionaries::files::read(path::Path::new("./data/file1.txt"));
 
 	println!("file1 lines: {:?}", lines);
@@ -59,6 +64,8 @@ pub fn files1() -> () {
 /// Test word 1.
 #[allow(dead_code)]
 pub fn words1() -> () {
+	println!("## TEST: Words 1.");
+
 	let words_a: Vec<&str> = vec!["-", "a", "b", "c", "A", "av", "ab", "aaac", "asdasdasdasd", "z"];
 	let words_b: Vec<&str> = vec!["-", "a", "c", "a", "z", "ab", "aasd", "aaacd", "asdasdasdasdy", "aaaaaaa"];
 	let mut cursor: usize = 0;
@@ -79,6 +86,8 @@ pub fn words1() -> () {
 /// Test dichotomy 1.
 #[allow(dead_code)]
 pub fn dicho1() -> () {
+	println!("## TEST: Dichotomy 1.");
+
 	let words: Vec<&str> = vec!["my", "abc", "zxcb", "sfsfdasjfjdask", "gastroenterological", "repanel"];
 	let dictionary = dictionaries::prepare_dictionary("english_alpha1.txt.sorted".to_string());
 	println!("Dict: len={} sorted={}", dictionary.len(), dictionaries::sort::is_sorted(&dictionary));
