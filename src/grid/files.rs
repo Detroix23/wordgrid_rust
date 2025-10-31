@@ -5,15 +5,18 @@ use std::{
 	io::{
 		self,
 		Read,
+		Write,
 	},
 	path,
 	char,
 };
 
 
-use crate::modules::{
-	self, 
-	maths
+use crate::{
+	modules::{
+		self, 
+		maths
+	}
 };
 
 const LINE_SEPARATORS: [char; 2] = ['\n', '\r'];
@@ -56,8 +59,22 @@ pub fn read(file_path: &path::Path) -> maths::CharGrid {
 	
 }
 
+/// Write a list of word. Each word is separated by `separator`.
+pub fn write(
+	file_path: &path::Path, 
+	string: String,
+) -> () {
+	let file = fs::File::create(file_path);
+	match file {
+		Ok(mut body) => {body
+			.write_all(string.as_bytes())
+			.expect(&format!("(X) - grid.files.write - Problem writting `{}`.", string));
+		},
+		Err(error) => {eprintln!("(!) - dictionaries.files.write - Can not write `file_path`:{} ({}).", file_path.display(), error);},
+	};
+}
+
 /// Shorthand to get dictionaries path, join the `name` to it, and read it.
 pub fn read_from_data(name: &str) -> maths::CharGrid {
 	read(&modules::defaults::paths().get_grids().join(name))
 }
-

@@ -33,6 +33,7 @@ pub const DIRECTION_RIGHT_TO_LEFT: [maths::Size; 4] = [
 pub struct PathsTuple {
 	pub dictionaries: path::PathBuf,
 	pub grids: path::PathBuf,
+	pub results: path::PathBuf,
 }
 impl PathsTuple {
 	/// Return a `&Path` of the `dictionary`.
@@ -43,6 +44,10 @@ impl PathsTuple {
 	/// Return a `&Path` of the `dictionary`.
 	pub fn get_grids(self: &Self) -> &path::Path {
 		self.grids.clone().leak()
+	}
+
+	pub fn get_results(self: &Self) -> &path::Path {
+		self.results.clone().leak()
 	}
 }
 
@@ -94,9 +99,18 @@ pub fn paths() -> PathsTuple {
 		},
 	};
 
+	let results_path: path::PathBuf = match env::var("RESULTS") {
+		Ok(value) => path::PathBuf::from(value),
+		Err(error) => {
+			eprintln!("(!) - Error reading env key `GRIDS`: {} \n -> Falling back to `./data/grids`", error);
+			path::PathBuf::from("./data/grids")
+		},
+	};
+
 	PathsTuple { 
 		dictionaries: dictionaries_path,
 		grids: grids_path,
+		results: results_path,
 	}
 }
 

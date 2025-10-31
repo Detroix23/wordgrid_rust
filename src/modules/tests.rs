@@ -40,15 +40,17 @@ pub fn general1() -> () {
     let grid1: maths::CharGrid = grid::files::read_from_data("grid1.txt");
 
     let mut wg1: grid::Grid = grid::Grid::new(
+		"halloween1".to_string(),
         grid1,
         defaults::DIRECTION_ALL.to_vec(),
 		dict.clone(),
     );
 
-    println!("{}", wg1.display(1usize));
 	wg1.read(2);
 
-    wg1.report_solutions(3);
+    println!("{}", wg1.report_all());
+
+	wg1.write_report();
 }
 
 /// Test files 1.

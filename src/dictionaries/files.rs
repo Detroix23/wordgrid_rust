@@ -7,7 +7,8 @@ use std::{
 	}, 
 	io::{
 		self,
-		Read, Write,
+		Read, 
+		Write,
 	},
 	path
 };
@@ -18,7 +19,7 @@ use crate::modules;
 /// Define line breaks, new words.
 const LINE_SEPARATORS: [char; 2] = ['\n', '\r'];
 /// Define character that will prematurely end the reading of the current line. 
-const LINE_SHORT: [char; 1] = [' '];
+const LINE_SHORT: [char; 3] = [' ', ';', ','];
 
 /// Read a file `name` and return a list of lines `String`.
 pub fn read(file_path: &path::Path) -> base::WordList {
