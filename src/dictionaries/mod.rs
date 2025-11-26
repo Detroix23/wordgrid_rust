@@ -11,7 +11,7 @@ use crate::modules;
 
 /// Create a dictionary from a `name`, and sort and write if necessary.
 pub fn prepare_dictionary(name: String) -> dictionaries::base::WordList {
-	eprintln!("### Dictionary preparation.");
+	eprintln!("\n### Dictionary preparation.");
 	
 	let mut dictionary: dictionaries::base::WordList = dictionaries::files::read_from_data(&name);
 

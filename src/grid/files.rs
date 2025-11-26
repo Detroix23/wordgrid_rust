@@ -49,7 +49,7 @@ pub fn read(file_path: &path::Path) -> maths::CharGrid {
 			grid
 		},
 		Err(error) => {
-			eprint!(
+			eprintln!(
 				"(!) - grid.files.read - Error opening given path ({}): {}. Falling back to an empty vec.", 
 				file_path.display(), error
 			);
@@ -75,6 +75,6 @@ pub fn write(
 }
 
 /// Shorthand to get dictionaries path, join the `name` to it, and read it.
-pub fn read_from_data(name: &str) -> maths::CharGrid {
+pub fn read_from_data(name: String) -> maths::CharGrid {
 	read(&modules::defaults::paths().get_grids().join(name))
 }

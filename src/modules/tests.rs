@@ -37,7 +37,7 @@ pub fn general1() -> () {
 
 	let dict = dictionaries::prepare_dictionary("hermitdave-FrequencyWords_en-50k.sorted".to_string());
 
-    let grid1: maths::CharGrid = grid::files::read_from_data("grid1.txt");
+    let grid1: maths::CharGrid = grid::files::read_from_data("grid1.txt".to_string());
 
     let mut wg1: grid::Grid = grid::Grid::new(
 		"halloween1".to_string(),

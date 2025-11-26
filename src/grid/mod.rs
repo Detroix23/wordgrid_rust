@@ -89,8 +89,7 @@ impl Grid {
 			let mut valid_word_start: bool = true;
 			let mut steps: usize = 0;
 
-			while 
-				self.in_grid(cursor) 
+			while self.in_grid(cursor) 
 				&& steps < reach
 				&& valid_word_start
 			{   

@@ -7,6 +7,11 @@ use glob;
 
 use crate::modules::maths;
 
+/// Default (fall-back) dictionary file name.
+pub const DICTIONARY: &'static str = "hermitdave-FrequencyWords_en-50k.sorted";
+/// Default (fall-back) grid file name.
+pub const GRID: &'static str = "grid.txt";
+
 #[allow(dead_code)]
 pub const DIRECTION_ALL: [maths::Size; 8] = [
    maths::Size { x: 1, y: 0 },

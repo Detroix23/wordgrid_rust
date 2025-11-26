@@ -1,23 +1,23 @@
 // src/main.rs
 
+use std::env;
+
 mod grid;
 mod dictionaries;
 mod modules;
+mod ui;
 
 fn main() {
-	println!("# Word grid.");
+	println!("# Word grid. Initialisation.");
 
-	println!("## Environment variables.");
+	println!("\n## Environment variables.");
 	println!(
 		"* Loaded: `{}`, `{}`", 
 		modules::defaults::paths().dictionaries.display(), modules::defaults::paths().grids.display()
 	);
 
-	modules::tests::general1();
+	let arguments: Vec<String> = env::args().collect();
 
-	// modules::tests::files1();
+	ui::inputs::launch_from_arguments(arguments);
 
-	// modules::tests::words1();
-
-	// modules::tests::dicho1();
 }
